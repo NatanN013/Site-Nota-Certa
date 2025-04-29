@@ -4,6 +4,7 @@ import { auth } from '../firebase.js';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 export default function Dashboard() {
+ if (typeof window === "undefined") return null;
   const router = useRouter();
   const [usuario, setUsuario] = useState(null);
   const [plano, setPlano] = useState('gratuito'); // simulado: 'gratuito' | 'basico' | 'premium'
@@ -13,26 +14,29 @@ export default function Dashboard() {
   const [carregando, setCarregando] = useState(false);
 
   useEffect(() => {
+  if (typeof window !== "undefined") {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUsuario(user);
-        // Simulação do plano baseado no e-mail (ajuste conforme seu backend futuramente)
-        if (user.email.includes('premium')) {
-          setPlano('premium');
-          setCorrecoesRestantes('ilimitadas');
-        } else if (user.email.includes('basico')) {
-          setPlano('básico');
+
+        if (user.email.includes("premium")) {
+          setPlano("premium");
+          setCorrecoesRestantes("ilimitadas");
+        } else if (user.email.includes("basico")) {
+          setPlano("básico");
           setCorrecoesRestantes(10);
         } else {
-          setPlano('gratuito');
-          setCorrecoesRestantes(1);
+          setPlano("gratuito");
+          setCorrecoesRestantes(3);
         }
       } else {
-        router.push('/login');
+        router.push("/login");
       }
     });
+
     return () => unsubscribe();
-  }, []);
+  }
+}, []);
 
   const sair = async () => {
     await signOut(auth);
