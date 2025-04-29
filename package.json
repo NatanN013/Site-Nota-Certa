@@ -12,6 +12,7 @@
     "react-dom": "18.2.0",
     "next-auth": "^4.22.1",
     "@supabase/supabase-js": "^2.39.5",
-    "axios": "^1.6.2"
+    "axios": "^1.6.2",
+    "firebase": "^10.7.0"
   }
 }
