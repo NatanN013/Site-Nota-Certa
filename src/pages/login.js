@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
